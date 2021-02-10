@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useToggle } from 'react-use';
 import './App.css';
 import { ButtonDemo as PureComponentDemo } from './components/PureComponentDemo/index';
-import { InputDemo as ComponentWithStateDemo } from './components/ComponentWithStateDemo/index';
+
+import loadable from '@loadable/component'
+
+const {InputDemo}= loadable(() => import('./components/ComponentWithStateDemo/index'))
 
 function App() {
   const [isPrimary = true, toggleAddToCartButtonStyle] = useToggle(true);
@@ -23,8 +26,8 @@ function App() {
       {/* demo 2: with prop and internal state */}
       <label> {`interconnected components with internal state: ${value}`}</label>
       <div style={{marginTop: '10px', marginBottom: '50px'}}>
-        <ComponentWithStateDemo initialValue={value} onPureComponentDemoValueChange={(value) => setValue(value)}/>
-        <ComponentWithStateDemo initialValue={value} onPureComponentDemoValueChange={(value) => setValue(value)}/>
+        <InputDemo initialValue={value} onPureComponentDemoValueChange={(value) => setValue(value)}/>
+        <InputDemo initialValue={value} onPureComponentDemoValueChange={(value) => setValue(value)}/>
       </div>
 
     </div>

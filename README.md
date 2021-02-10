@@ -29,12 +29,18 @@ All app source code should be placed in `src` folder.
 
 `src` folder:
 
-- `/api` contains API library code.
+- `/@types` contains all common type definitions.
+
+- `/api` contains API library.
 
 - `/app` contains all shared templates and components files.
+    
+    - `/components`
+    - `hooks`
+    - `/theme`
+    - `/util`
 
-
-- `/constants` a generic bucket for constants. We should avoid adding to it and remove this folder later.
+- `/constants` a generic bucket for constants.
 
 - `/middlewares` contains Redux middleware code.
 
@@ -42,6 +48,7 @@ All app source code should be placed in `src` folder.
 
 - `/store` contains Redux store logic.
 
+ 
 - `/main.js` file used as an entry point to compile a standalone package.
 
 `build` folder (created after `npm run build`) contains production app code.
@@ -56,6 +63,32 @@ All app source code should be placed in `src` folder.
 ```js
 ```
 
+## Performance tips
+
+- Use `useCallback` to avoid expensive children renders
+
+```js
+function Component() {
+  const callback = useCallback(() => { dostuff }, [deps])
+
+  return <Child prop={callback} />
+}
+```
+
+- Use `useMemo` to avoid expensive computation
+
+```js
+function Component({ foo }) {
+  // This very expensive computation will only run when it's input (foo)
+  // changes, allowing Component to re-render without performance issues
+  const bar = useMemo(() => {
+     ... something very complicated with `foo` ...
+  }, [foo])
+
+  return <div>{bar}</div>
+}
+```
+
 ## Theme and styling
 
 - [css module](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/) is recommended. No css-in-js by for now even it's another good approach
@@ -67,4 +100,14 @@ All app source code should be placed in `src` folder.
 - Use [React Hooks](https://reactjs.org/docs/hooks-intro.html) over classes. we have included a very popular library called [react hook](https://github.com/streamich/react-use), where you can find a lot of useful functions.
 
 - Use [Redux Style Guide](https://redux.js.org/style-guide/style-guide) for writing store logic.
+
+
+## Bundle/Code splitting
+
+- Use [Loadable Components](https://loadable-components.com/) over `React.lazy` or [dynamic import](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import#Dynamic_Imports)
+
+
+## Tweak the create-react-app webpack config
+
+We only have [customize-cra](https://github.com/arackaf/customize-cra) supported.
 

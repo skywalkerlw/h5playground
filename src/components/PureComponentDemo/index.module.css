@@ -1,0 +1,16 @@
+.base {
+  color: white;
+  background-color: green;
+  border: 0;
+  margin: 50px;
+  border-width: 0;
+  max-width: 200px;
+}
+
+.primary {
+  background-color: red;
+}
+
+.secondary {
+  background-color: green;
+}
